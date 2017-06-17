@@ -11,11 +11,10 @@ public class MainAlgorithms {
 
     public static void main(String[] args) {
         int[] myArray = {1,4, 8, 3, 3, 2, 10, 18, 4,7};
-        int[] myArray2 = {1,13,4,4,8,3,4, 8, 3, 3, 2, 10, 18, 4,7};
-        System.out.println("Bubble sort:");
-        bubbleSort(myArray);
-        System.out.println("Insertion sort:");
-        insertionSort(myArray2);
+        System.out.println(linearSearch(myArray, 4));
+        int[] sortedArray = {1, 2 , 3, 4, 5}; 
+        System.out.println(binarySearch(sortedArray, 4));
+        System.out.println(recursiveBinarySearch(sortedArray,5,0,sortedArray.length));
     }
     /*
         Bubble sort 'bubbles' items to the right. After the first pass,
@@ -65,5 +64,80 @@ public class MainAlgorithms {
                 list[previousIndex+1] = currentValue; //slots item into correct place 
         }
 	System.out.println(Arrays.toString(list));
+    } 
+    /**
+     *  Linear search goes through every item in a list sequentially searching 
+     * one by one until the item is found or the end of the list is reached. 
+     *  
+     * Time Complexity: 0(n)
+     * 
+     */
+    
+    public static int linearSearch (int[] list,int value) {
+        int index = -1;
+        int i = 0;
+        boolean found = false; 
+        while (!found && i < list.length) {
+            if (list[i] == value) {
+                index = i;
+                found = true;
+            }
+            else {
+                i++;
+            }
+        }
+        return index;
+    }
+    /**
+     * Binary search uses a divide and conquer approach to repeatedly divide the 
+     * portion of the data set that could contain the item. This is continued 
+     * until there's only one item in the data set. It ONLY works on a sorted 
+     * list
+     * 
+     * Time Complexity: O(log n)
+     */
+    public static int binarySearch(int[] list, int value) {
+        int low = 0; 
+        int high = list.length;
+        int index = -1;
+        boolean found = false;
+        while (low <= high && found == false) {
+            int guess = (low + high) / 2;
+            if (list[guess] == value) {
+                index = guess;
+                found = true;
+            }
+            else if (list[guess] < value) {
+                low = guess + 1;
+            }
+            else 
+                high = guess - 1;
+        }
+        return index;
+    }
+    public static int recursiveBinarySearch(int[] list, int value,int  first,int last) {
+        if (last > first) {
+            return -1;
+        }
+        else {
+            int guess = (first + last) / 2;
+            if (list[guess] > value) {
+                return recursiveBinarySearch(list,value,first,guess -1);
+            }
+            else {
+                if (list[guess] < value) 
+                    return recursiveBinarySearch(list,value, guess + 1, last);
+                
+                else 
+                    return guess;
+                
+            }
+        }
     }
 }
+
+    
+        
+ 
+                
+
